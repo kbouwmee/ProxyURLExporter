@@ -87,6 +87,7 @@ public class APIProxyDownloader {
        
         try {
             JSONArray envArray = o.getJSONArray("environment");
+            
             for (int i = 0; i < envArray.length(); i++)
             {
                 // parse the JSON to extract all API Proxies (name, deployed revision and basepath)
