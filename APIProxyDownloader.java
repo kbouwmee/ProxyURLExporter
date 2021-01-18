@@ -120,6 +120,7 @@ public class APIProxyDownloader {
                     
                         for (int k = 0; k < revArray.length(); k++) {
                             String deployedRevision = revArray.getJSONObject(k).getString("name");
+                            // this is always "/" - BUG?
                             String basePath = revArray.getJSONObject(k).getJSONObject("configuration").getString("basePath");
                             // initialize API Proxy object
                             APIProxy api = new APIProxy(APIProxyName, deployedRevision, basePath);
@@ -189,7 +190,7 @@ public class APIProxyDownloader {
         return document;
     }
 
-    private ArrayList<String> parseXML(Document document) 
+    private void parseXML(Document document, APIProxy api) 
     {
         ArrayList<String> s = new ArrayList<String>();
         try {
@@ -197,17 +198,19 @@ public class APIProxyDownloader {
             XPath xPath = XPathFactory.newInstance().newXPath();
             NodeList nodelist = (NodeList) xPath.evaluate("/ProxyEndpoint/HTTPProxyConnection/VirtualHost/text()", document, XPathConstants.NODESET);
             
-            for (int i = 0; i < nodelist.getLength(); ++i) {
-                Node node = nodelist.item(i);
-                s.add(node.getNodeValue());                
-            }
+            Node node = (Node)xPath.evaluate("/ProxyEndpoint/HTTPProxyConnection/BasePath/text()", document, XPathConstants.NODE);
 
+            for (int i = 0; i < nodelist.getLength(); ++i) {
+                Node vHostNode = nodelist.item(i);
+                s.add(vHostNode.getNodeValue());                
+            }
+            api.setVirtualHost(s);
+            api.basePath = node.getNodeValue();
 
         }
         catch(Exception e) {
             e.printStackTrace();
         }
-        return s;
     }
 
     public ArrayList<APIProxy> process() 
@@ -217,8 +220,9 @@ public class APIProxyDownloader {
 
         for(APIProxy api: apis) {
             // get zip and find virtual host
-            ArrayList<String> vhosts = parseXML(getAPIProxyXML(api));
-            api.setVirtualHost(vhosts);
+            Document doc = getAPIProxyXML(api);
+            parseXML(doc, api);
+            
         }
         return apis;
     }

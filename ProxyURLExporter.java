@@ -84,7 +84,10 @@ public class ProxyURLExporter {
             System.out.println("vhost      : " + vhost);
             System.out.println("======================================");
 
-            // TODO: get domain alias for the vhost so that we can build complete url
+            // Get hostalias from the vhost so that we can build complete url
+            VirtualHostDownloader vhDowner = new VirtualHostDownloader(org, env, vhost, token);
+            VirtualHost vh = vhDowner.process();
+            if(vh == null) System.out.println("Virtual host was not found");
 
             // Create downloader object
             APIProxyDownloader downloader = new APIProxyDownloader(org, env, token);
@@ -98,7 +101,8 @@ public class ProxyURLExporter {
                 System.out.println("The following API proxies are deployed on virtual host: " + vhost);
                 for(APIProxy api: apis) {
                     if(api.containsVirtualHost(vhost)) {
-                        System.out.println(api.name + "  | revision: " + api.deployedRevision + "  | basePath: " + api.basePath );
+                        String url = vh.getDeploymentURLs(api);
+                        System.out.println(api.name + "  | revision: " + api.deployedRevision + "  | " + url );
                     }
                 }
             } else {

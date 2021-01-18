@@ -1,6 +1,6 @@
 # Find APIs deployed on a Virtual Host in Apigee
 
-This Java program finds all API Proxies deployed on a specific virtual host in an org and env. Without this, you would have to inspect each API proxy in the UI of Apigee.
+This Java program finds all API Proxies deployed on a specific virtualhost in an org and env. It calls the Apigee Management API to find all deployed API Proxies in an environment and then downloads the ZIP files of each one to inspect the virtual host. It outputs a list of API Proxies, with deployed revision number on the requested virtualhost and it's basepath. Without this, you would have to inspect each API Proxy in the UI of Apigee.
 
 ## Disclaimer
 
