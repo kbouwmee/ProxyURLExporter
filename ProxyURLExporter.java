@@ -36,7 +36,7 @@ public class ProxyURLExporter {
             // load a properties file
             prop.load(input);
     
-            // set therapist properties
+            // set apigee properties
             prop.setProperty("apigee.org", prop.getProperty(t+".org"));
             prop.setProperty("apigee.env", prop.getProperty(t+".env"));
             prop.setProperty("apigee.vhost", prop.getProperty(t+".vhost"));
@@ -60,7 +60,6 @@ public class ProxyURLExporter {
     public static void main(String[] args) 
     {
         System.out.println(" ");
-        System.out.println("Copyright 2021 - Kevin Bouwmeester");
         System.out.println("This program will get all API Proxies deployed on");
         System.out.println("a virtual host in an environment for specific org.");
         System.out.println(" ");
