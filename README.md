@@ -11,7 +11,7 @@ This example is not an official Google product, nor is it part of an official Go
 This material is copyright 2018-2020, Google LLC.
 and is licensed under the Apache 2.0 license. See the [LICENSE](LICENSE) file.
 
-This code is open source but you don't need to compile it in order to use it.
+This code is open source but you need to compile it in order to use it.
 
 ## Dependencies
 This Java program depends on the `org.json` library. I found mine here: [https://github.com/stleary/JSON-java](https://github.com/stleary/JSON-java) or use the [direct link](https://repo1.maven.org/maven2/org/json/json/20201115/json-20201115.jar).
